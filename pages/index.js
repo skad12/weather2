@@ -39,13 +39,13 @@ function Weather() {
       </Head>
 
       <div
-        className="grid min-h-screen antialiased text-white bg-cover place-items-center"
+        className="grid min-h-screen antialiased text-white bg-cover place-items-center pb-48 "
         style={{
           backgroundImage: `url('https://images.pexels.com/photos/1671324/pexels-photo-1671324.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')`,
         }}
       >
         {/* box content */}
-        <div className="box-content grid w-2/6 grid-cols-2 bg-black rounded-md h-72">
+        <div className="box-content lg:w-2/6 lg:grid-cols-2 bg-black rounded-md lg:grid h-72 ">
           <div
             className="p-4 space-y-4 bg-cover rounded-md"
             style={{
@@ -80,7 +80,7 @@ function Weather() {
             </div>
           </div>
 
-          <div className="px-6 space-y-2 bg-black rounded-lg w-72 pt-7">
+          <div className="px-6 space-y-2 bg-black rounded-lg pt-7">
             <div className="flex justify-between text-xs">
               <div>CLOUD</div>
               <div>{wData ? wData.current.cloud : null} Oktas</div>
@@ -96,8 +96,8 @@ function Weather() {
               <div>{wData ? wData.current.wind_mph : null} mph</div>
             </div>
 
-            <form onSubmit={handleSubmit} className="pt-10 space-y-6">
-              <div className="grid place-items-center">
+            <form onSubmit={handleSubmit} className="pt-10 space-y-6 pb-12 ">
+              <div className="grid place-items-center ">
                 <input
                   onChange={(e) => setCity(e.target.value)}
                   required
