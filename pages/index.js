@@ -39,7 +39,7 @@ function Weather() {
       </Head>
 
       <div
-        className="grid min-h-screen antialiased text-white bg-cover place-items-center pb-48 "
+        className="grid min-h-screen antialiased text-white bg-cover place-items-center "
         style={{
           backgroundImage: `url('https://images.pexels.com/photos/1671324/pexels-photo-1671324.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')`,
         }}
