@@ -1,19 +1,27 @@
 import Head from "next/head";
-import { useState } from "react";
+import  { useState, useEffect } from "react";
 
 function Weather() {
   const [city, setCity] = useState();
   const [wData, setWData] = useState();
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     fetchWeatherData();
   };
 
+  useEffect(() => {
+    fetchWeatherData();
+  }, []);
+
   const fetchWeatherData = async () => {
-    const res = await fetch(
-      `https://weatherapi-com.p.rapidapi.com/current.json?q=${city}`,
+    // start loading
+    setLoading(true);
+
+    // fetch data
+    const res = await fetch( 
+      `https://weatherapi-com.p.rapidapi.com/current.json?q=${city ?? `Abuja`}`,
       {
         method: "GET",
         headers: {
@@ -24,18 +32,20 @@ function Weather() {
       }
     );
 
+    // extract json data
     const data = await res.json();
 
-    console.log(data);
-      setWData(data);
-    
+    setWData(data);
+
+    // stop loading
+    if (data) setLoading(false);
   };
 
   return (
     <div>
       <Head>
         <title>Weather</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/weather.ico" />
       </Head>
 
       <div
@@ -45,11 +55,11 @@ function Weather() {
         }}
       >
         {/* box content */}
-        <div className="box-content lg:w-2/6 lg:grid-cols-2 bg-black rounded-md lg:grid h-72 ">
+        <div className="box-content lg:w-2/6 grid-cols-2 bg-black rounded-md lg:grid h-72 xl:grid">
           <div
             className="p-4 space-y-4 bg-cover rounded-md"
             style={{
-              backgroundImage: `url('https://images.pexels.com/photos/3825179/pexels-photo-3825179.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500')`,
+              backgroundImage: `url('https://images.pexels.com/photos/2448749/pexels-photo-2448749.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')`,
             }}
           >
             <div>
@@ -71,11 +81,13 @@ function Weather() {
             <div className="text-xs">
               {wData ? wData.current.last_updated : null}
             </div>
-            <div className="text-xs font-bold">{wData ? wData.location.tz_id : null}</div>
+            <div className="text-xs font-bold">
+              {wData ? wData.location.tz_id : null}
+              </div>
             <div className="text-xl">
               {wData ? wData.location.name : null}
             </div>
-            <div className="text-2xl font-semibold tracking-tighter">
+            <div className="text-7xl font-semibold tracking-tighter">
               {wData ? wData.current.temp_c : null}&#176; c
             </div>
           </div>
@@ -109,7 +121,8 @@ function Weather() {
                 {/* {JSON.stringify(wData)} */}
               </div>
 
-              <button type="submit" className="btn btn-primary">
+              <button type="submit" className={`${loading && `loading`} btn w-full btn-primary `} >
+                {/* <div  className="pointer-events-none w-5 h-5 rounded-xl border-2 border-transparent border-solid border-t-white mr-2 animate-spin"></div> */}
                 Get weather
               </button>
             </form>
